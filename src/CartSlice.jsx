@@ -7,13 +7,17 @@ export const CartSlice = createSlice({
   },
   reducers: {
     addItem: (state, action) => {
-    
+      console.log("test is passed");
+      const plant = state[action.payload];
+      if(plant){
+        state.items.push(plant)
+      }
     },
+
     removeItem: (state, action) => {
     },
-    updateQuantity: (state, action) => {
 
-    
+    updateQuantity: (state, action) => {
     },
   },
 });
