@@ -9,28 +9,53 @@ const CartItem = ({ onContinueShopping }) => {
 
   // Calculate total amount for all products in the cart
   const calculateTotalAmount = () => {
- 
+    let totalCost = 0;
+    cart.forEach((item) => {
+      let numericString = item.cost.replace(/[^0-9]/g, '');
+      let priceInteger = parseInt(numericString, 10);
+      totalCost += priceInteger * item.quantity;
+    });
+    return totalCost;
   };
 
   const handleContinueShopping = (e) => {
-   
   };
-
-
 
   const handleIncrement = (item) => {
-  };
+    cart.map(cartItem => {
+      if (cartItem.name === item.name) {
+        const load = {name:item.name, quantity:cartItem.quantity + 1};
+        dispatch(updateQuantity(load));
+      }
+    });
+  };  
 
   const handleDecrement = (item) => {
-   
+    cart.map(cartItem => {
+      if (cartItem.name === item.name) {
+        if (cartItem.quantity > 1) {
+          const load = {name:item.name, quantity:cartItem.quantity - 1};
+          console.log("item bigger than 0")
+          dispatch(updateQuantity(load));
+        } else {
+          dispatch(removeItem(item.name));
+        }
+      }});
   };
 
   const handleRemove = (item) => {
+    cart.map(cartItem => {
+      if (cartItem.name=== item.name) {
+        dispatch(removeItem(item.name));
+      }
+    });
   };
-
-  // Calculate total cost based on quantity for an item
+  
   const calculateTotalCost = (item) => {
-  };
+    let numericString = item.cost.replace(/[^0-9]/g, '');
+    let priceInteger = parseInt(numericString, 10);
+    return(item.quantity * priceInteger);
+  }
 
   return (
     <div className="cart-container">
